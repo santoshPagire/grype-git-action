@@ -28,6 +28,7 @@ jobs:
         with:
           image: "localbuild/javaapp:latest"
           output-format: cyclonedx-xml
+          output-file: grype-scan-report.xml
           fail-build: false
           severity-cutoff: critical
 
