@@ -31,7 +31,6 @@ jobs:
               -o template \
               --template ./templates/html.tmpl \
               --file grype-report.html \
-              --fail-build false \
               --fail-on critical
         continue-on-error: true
         
