@@ -27,6 +27,8 @@ jobs:
         uses: anchore/scan-action@v6
         with:
           image: "localbuild/javaapp:latest"
+          output-format: sarif
+          output-file: grype-report.sarif
           fail-build: false
           severity-cutoff: critical
 
@@ -34,4 +36,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: grype-scan-report
-          path: /tmp/grype-budH34/output
+          path: grype-report.sarif
