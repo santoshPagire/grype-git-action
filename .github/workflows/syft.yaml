@@ -1,0 +1,38 @@
+name: Docker Build and Test
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  generate-sbom:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      
+      - name: build local container
+        uses: docker/build-push-action@v4
+        with:
+          tags: localbuild/javaapp:latest
+          push: false    
+
+      - name: Set up Syft
+        run: |
+           sudo curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sudo sh -s -- -b /usr/local/bin
+
+      - name: Generate SBOM for Docker image
+        run: |
+          syft localbuild/javaapp:latest -o syft-json -f syft-json.json
+
+      - name: Upload SBOM as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: sbom
+          path: sbom.json
+
