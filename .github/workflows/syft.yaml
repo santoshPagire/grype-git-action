@@ -31,8 +31,8 @@ jobs:
           syft localbuild/javaapp:latest -o syft-json -f syft-json.json
 
       - name: Upload SBOM as artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: sbom
-          path: sbom.json
+          path: syft-json.json
 
