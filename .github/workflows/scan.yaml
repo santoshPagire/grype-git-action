@@ -27,7 +27,7 @@ jobs:
         uses: anchore/scan-action@v6
         with:
           image: "localbuild/javaapp:latest"
-          output-format: cyclonedx
+          output-format: cyclonedx-xml
           fail-build: false
           severity-cutoff: critical
 
