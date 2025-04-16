@@ -27,3 +27,5 @@ jobs:
         uses: anchore/scan-action@v6
         with:
           image: "localbuild/javaapp:latest"
+          fail-build: true
+          severity-cutoff: critical
