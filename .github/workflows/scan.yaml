@@ -31,8 +31,7 @@ jobs:
           severity-cutoff: critical
 
       - name: Upload vulnerability report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: grype-scan-report
           path: /tmp/grype-budH34/output
-        
