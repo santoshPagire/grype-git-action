@@ -30,3 +30,9 @@ jobs:
           fail-build: false
           severity-cutoff: critical
 
+      - name: Upload vulnerability report
+        uses: actions/upload-artifact@v3
+        with:
+          name: grype-scan-report
+          path: /tmp/grype-budH34/output
+        
