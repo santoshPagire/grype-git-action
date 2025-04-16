@@ -25,6 +25,7 @@ jobs:
         with:
             tags: localbuild/javaapp:latest
             push: false 
+            load: true
 
       - name: Generate SBOM for Docker image
         run: |
