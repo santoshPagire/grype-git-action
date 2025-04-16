@@ -1,0 +1,23 @@
+name: Docker Build and Test
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build Docker image
+        run: |
+          docker build -t javaapp:latest .
+   
+      - name: Scan image
+        uses: anchore/scan-action@v6
+        with:
+          image: "javaapp:latest"
