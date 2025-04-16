@@ -28,7 +28,7 @@ jobs:
 
       - name: Generate SBOM for Docker image
         run: |
-          syft localbuild/javaapp:latest -o syft-json -f syft-json.json
+          syft localbuild/javaapp:latest -o syft-json > syft-json.json
 
       - name: Upload SBOM as artifact
         uses: actions/upload-artifact@v4
