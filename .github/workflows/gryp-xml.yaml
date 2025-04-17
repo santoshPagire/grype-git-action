@@ -49,4 +49,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: grype-scan-report
-          path: grype-scan-report.sarif
+          path: grype-scan-report.sarifd
