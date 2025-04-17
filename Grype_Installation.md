@@ -28,10 +28,10 @@ syft <image_name or file_name> -o syft-json > syft-sbom.json
 git clone https://github.com/anchore/grype.git ~/.grype
 ```
 
-then for generating report in html format use following command and store report in file. e.g `report.html`
+then for generating report in html format using sbom json file i.e `syft-sbom.json`.Use following command and store report in file. e.g `report.html`
 
 ```bash
-grype -o template -t ~/.grype/templates/html.tmpl sbom:./syft-json.json > report.html
+grype -o template -t ~/.grype/templates/html.tmpl sbom:./syft-sbom.json > report.html
 ```
  After run this command you get report of vulnerabilities in image or file.
 
