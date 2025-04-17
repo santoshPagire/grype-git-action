@@ -1,0 +1,54 @@
+name: Scan SBOM and Generate HTML Report for Java Jar.
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  generate-sbom:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2   
+
+      - name: Set up Syft
+        run: |
+           sudo curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sudo sh -s -- -b /usr/local/bin
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+         
+      - name: build local container
+        uses: docker/build-push-action@v4
+        with:
+            tags: localbuild/javaapp:latest
+            push: false 
+            load: true
+
+      - name: Generate SBOM for Docker image
+        run: |
+          syft dir:./code -o syft-json > syft-json.json
+
+      - name: Upload SBOM as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sbom
+          path: syft-json.json
+
+      - name: Scan image and generate HTML report
+        run: |
+            sudo curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sudo sh -s -- -b . v0.87.0 
+          
+            ./grype sbom:syft-json.json \
+              -o template \
+              --template ./templates/html.tmpl \
+              --file java-scan-report.html \
+              --fail-on critical
+          
+      - name: Upload HTML scan report
+        uses: actions/upload-artifact@v4
+        with:
+          name: grype-html-report
+          path: java-scan-report.html
