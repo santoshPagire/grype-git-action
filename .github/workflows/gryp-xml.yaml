@@ -21,12 +21,27 @@ jobs:
           push: false
           load: true
       
+      # - name: Scan image
+      #   uses: anchore/scan-action@v6
+      #   with:
+      #     image: "localbuild/javaapp:latest"
+      #     output-format: cyclonedx-xml
+      #     output-file: grype-scan-report.xml
+      #     fail-build: false
+      #     severity-cutoff: critical
+
+      # - name: Upload vulnerability report
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: grype-scan-report
+      #     path: grype-scan-report.xml
+
       - name: Scan image
         uses: anchore/scan-action@v6
         with:
           image: "localbuild/javaapp:latest"
-          output-format: cyclonedx-xml
-          output-file: grype-scan-report.xml
+          output-format: sarif
+          output-file: grype-scan-report.sarif
           fail-build: false
           severity-cutoff: critical
 
@@ -34,4 +49,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: grype-scan-report
-          path: grype-scan-report.xml
+          path: grype-scan-report.sarif
